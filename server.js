@@ -26,8 +26,11 @@ app.get('/api/instagram', async (req, res) => {
     console.log('Fetched posts:', posts);
     res.json(posts);
   } catch (error) {
-    console.error('Error fetching Instagram posts:', error);
-    res.status(500).json({ error: 'Error fetching Instagram posts', details: error.message });
+    console.error('Error fetching Instagram posts:', error.response?.data || error.message);
+    res.status(500).json({ 
+      error: 'Error fetching Instagram posts', 
+      details: error.response?.data?.error?.message || error.message 
+    });
   }
 });
 
